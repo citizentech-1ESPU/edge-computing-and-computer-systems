@@ -71,7 +71,6 @@ Neste repositório, a chave de escrita do ThingSpeak está como `COLOQUE_SUA_WRI
 - `sketch.ino`: código do ESP32
 - `diagram.json`: circuito do Wokwi
 - `libraries.txt`: bibliotecas usadas (OneWire, DallasTemperature, LiquidCrystal I2C)
-- `roteiro-video.md`: fala do vídeo explicativo
 - `prompt.md`: uso de IA
 
 ## Uso de IA
