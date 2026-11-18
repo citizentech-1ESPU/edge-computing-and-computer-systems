@@ -68,6 +68,7 @@ bool pisca = false;
 int bipesFaltando = 0, freqBip = 0, duracaoBip = 0;
 unsigned long tProxBip = 0;
 
+// liga os pinos, o display, o sensor e o wifi
 void setup() {
   Serial.begin(115200);
 
@@ -91,6 +92,7 @@ void setup() {
   Serial.println("Xepa Certa ligada");
 }
 
+// a cada 1 s le o sensor e decide o estado; LEDs e buzzer rodam sempre; a cada 20 s envia os dados
 void loop() {
   unsigned long agora = millis();
 
@@ -121,6 +123,7 @@ void loop() {
   }
 }
 
+// le a temperatura, ignora leitura impossivel e soma o tempo acima de 5 C
 void lerSensor(float seg) {
   float t = sensor.getTempCByIndex(0);
   sensor.requestTemperatures();
@@ -143,6 +146,7 @@ void lerSensor(float seg) {
   }
 }
 
+// media das ultimas 5 leituras, pra evitar alarme falso por ruido
 float suavizar(float valor) {
   leituras[posLeitura] = valor;
   posLeitura = (posLeitura + 1) % JANELA_MEDIA;
@@ -153,6 +157,7 @@ float suavizar(float valor) {
   return soma / qtdLeituras;
 }
 
+// quantos graus por hora a caixa esta esquentando, comparando com uns 5 min atras
 float calcularTaxa(float m) {
   float resultado = 0;
 
@@ -168,10 +173,12 @@ float calcularTaxa(float m) {
   return resultado;
 }
 
+// quanto falta pras 4h fora do frio
 int minutosRestantes() {
   return max(0, (int)(DESCARTE_APOS_MIN - minutosFora));
 }
 
+// regra 2h/4h: sem leitura, descarte, xepa, gelo e normal, nessa ordem de prioridade
 Estado decidirEstado() {
   if (errosSeguidos >= LEITURAS_INVALIDAS_PARA_ERRO) return SEM_LEITURA;
   if (errosSeguidos > 0) return estado;  // 1 ou 2 erros: segura o estado
@@ -188,6 +195,7 @@ Estado decidirEstado() {
   return NORMAL;
 }
 
+// cada estado acende um LED; no gelo o verde pisca e sem leitura pisca os tres
 void atualizarLeds(unsigned long agora) {
   if (agora - tPisca >= 400) {
     tPisca = agora;
@@ -209,6 +217,7 @@ void atualizarLeds(unsigned long agora) {
   digitalWrite(LED_VERMELHO, vm);
 }
 
+// agenda os bipes, que o atualizarBuzzer toca sem travar o loop
 void bipar(int qtd, int freq, int duracao) {
   bipesFaltando = qtd;
   freqBip = freq;
@@ -227,6 +236,7 @@ void tocarAlarme() {
   }
 }
 
+// gelo e sem leitura repetem o aviso a cada 10 s, descarte a cada 5 s
 void atualizarBuzzer(unsigned long agora) {
   if (estado == GELO || estado == SEM_LEITURA) {
     if (agora - tAlarme >= 10000) {
@@ -246,6 +256,7 @@ void atualizarBuzzer(unsigned long agora) {
   }
 }
 
+// toca o aviso e registra no Serial quando o estado muda
 void mudouEstado(unsigned long agora) {
   tAlarme = agora;
   tocarAlarme();
@@ -254,6 +265,7 @@ void mudouEstado(unsigned long agora) {
   Serial.println(nomeEstado(estado));
 }
 
+// linha 1: temperatura e tempo fora do frio; linha 2: estado
 void atualizarDisplay() {
   lcd.clear();
 
@@ -271,6 +283,7 @@ void atualizarDisplay() {
   lcd.print(nomeEstado(estado));
 }
 
+// uma linha por segundo no Serial Monitor pra acompanhar a simulacao
 void mostrarSerial() {
   if (estado == SEM_LEITURA) return;
 
@@ -286,12 +299,14 @@ void mostrarSerial() {
   Serial.println(nomeEstado(estado));
 }
 
+// minutos no formato 1h05
 String formatarTempo(float minutos) {
   int h = (int)minutos / 60;
   int m = (int)minutos % 60;
   return String(h) + "h" + (m < 10 ? "0" : "") + String(m);
 }
 
+// texto de cada estado pro display e pro Serial
 String nomeEstado(Estado e) {
   switch (e) {
     case NORMAL:      return "VENDA NORMAL";

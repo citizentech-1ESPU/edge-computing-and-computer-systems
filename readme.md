@@ -15,6 +15,25 @@ Integrantes:
 - Daniel Gomes Torres, RM 573436
 - Henrique Lira, RM 571009
 
+## Ficha da CitizenTech
+
+- **Nome:** Xepa Certa
+- **Cidade e bairro:** São Paulo, Zona Norte, feira de domingo da Av. Engenheiro Caetano Álvares
+- **Cidadão:** o feirante de perecível (peixe, queijo e frios), os fregueses do bairro e as ONGs e cozinhas solidárias da região
+- **Problema em uma frase:** o feirante não tem como saber se o peixe e o queijo ficaram frios o suficiente, perde mercadoria quando o gelo acaba antes do esperado, e a sobra boa não chega a tempo a quem precisa.
+- **Como funciona:** um sensor na caixa térmica mede a temperatura e soma o tempo fora do frio. A caixa mostra verde, amarelo ou vermelho mesmo sem internet. No amarelo, o feirante anuncia a xepa no site e fregueses e ONGs reservam. No vermelho, o produto sai da venda.
+- **Indicador:** quilos de perecível que deixaram de ir para o lixo por feira (vendidos na xepa ou doados) e reais de perda evitada por feirante.
+- **ODS:** 2 (meta 2.1, acesso a alimento), 3 (metas 3.3 e 3.d, saúde e alerta de risco) e 11 (meta 11.6, menos resíduo na cidade).
+
+O que cada matéria entrega:
+
+- Edge Computing: a caixa térmica com sensor ([repositório](https://github.com/citizentech-1ESPU/edge-computing-and-computer-systems))
+- Front-end e Web Development: o site da xepa ([repositório](https://github.com/citizentech-1ESPU/web_development))
+- Python: o painel da banca ([repositório](https://github.com/citizentech-1ESPU/computational-thinking-with-python))
+- Matemática: o modelo de quanto o gelo dura ([repositório](https://github.com/citizentech-1ESPU/differentiated-problem-solving))
+- STED: requisitos, jornada e protótipo ([repositório](https://github.com/citizentech-1ESPU/software-and-total-experience-design))
+- Pitch: a história do projeto em 3 minutos
+
 ## O problema
 
 Peixe e queijo ficam em caixas térmicas com gelo durante a feira. Em dia quente o gelo acaba antes do esperado, e o feirante só percebe quando o produto já esquentou. Como não tem como saber quanto tempo o peixe ficou fora do frio, ele joga fora tudo o que deixa dúvida. A caixa resolve isso medindo e decidindo no próprio lugar, onde a internet da feira não chega bem.
@@ -71,8 +90,8 @@ Neste repositório, a chave de escrita do ThingSpeak está como `COLOQUE_SUA_WRI
 - `sketch.ino`: código do ESP32
 - `diagram.json`: circuito do Wokwi
 - `libraries.txt`: bibliotecas usadas (OneWire, DallasTemperature, LiquidCrystal I2C)
-- `prompt.md`: uso de IA
+- `prompts.md`: prompts usados e como a IA ajudou
 
 ## Uso de IA
 
-Como a IA foi usada está no `prompt.md`.
+Os prompts usados, o que a IA ajudou a fazer, como conferimos e o que ela errou estão no `prompts.md`.
